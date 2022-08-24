@@ -3,14 +3,21 @@
 ```
 .
 │   README.md
-│   requirements.txt    
+│   requirements-dbx.txt
+│   requirements-local.txt
 │   deploy_package.sh
 │   setup.py
+│
+└───notebooks
+│   │   use_bronze_logs.py
 │
 └───logs_jobs
     │   __init__.py
     │   bronze_logs.py
+    │   gold_city_requests.py
+    │   gold_to_sql_database.py
     │   silver_logs_enriched.py
+    │   gold_user_requests.py
     │
     └───utils
         │   common.py
@@ -27,40 +34,6 @@
 ### Deploy Python Wheel to Databricks
 Run the `deploy_package.sh`. It will upload the package to DBFS in `dbfs:/jobs/logs_jobs/logs_jobs-0.1-py2.py3-none-any.whl`.
 (It requires Databricks CLI and Azure CLI installed in your Terminal)
-
-## Logs Jobs
-- **bronze_logs**: transforms logs text files in `<data_root_path>/raw/` and stores the result in `<data_root_path>/bronze/logs/`, creating Spark SQL table `my_dbx.logs`.
-  
-    |Column Name  	    | Data Type   	|
-    |---	            |---	        |
-    | ip  	            | string        |
-    | user  	        | string  	    |
-    | datetime  	    | timestamp     |
-    | request_type  	| string  	    |
-    | request_endpoint  | string  	    |
-    | request_protocol  | string  	    |
-    | response_code  	| integer  	    |
-    | response_time  	| integer  	    |
-
-- **silver_logs_enriched**: enriches the bronze logs data into `<data_root_path>/bronze/logs/` with ip information obtained from Public Rest API, and stores the result into `<data_root_path>/silver/logs_enriched/`, creating Spark SQL table `my_dbx.logs_enriched`.
-
-    |Column Name  	    | Data Type   	|
-    |---	            |---	        |
-    | datetime  	    | timestamp     |
-    | request_type  	| string  	    |
-    | request_endpoint  | string  	    |
-    | request_protocol  | string  	    |
-    | response_code  	| integer  	    |
-    | response_time  	| integer  	    |
-    | user  	        | string  	    |
-    | ip  	            | string        |
-    | ip_continent_code | string        |
-    | ip_continent_name | string        |
-    | ip_country_code   | string        |
-    | ip_country_name   | string        |
-    | ip_state_prov_code| string        |
-    | ip_state_prov     | string        |
-    | ip_city           | string        |
 
 
 ## Local development and testing
@@ -97,13 +70,16 @@ This can be very useful in some cases like:
 - Configure Databricks Connect to connect to your Cluster:
   - `databricks-connect configure`
 
-
 ### Run the code with Databricks Connect
 Follow exactly the same steps as for running the code locally. Be aware that step 6 will fail since there is a limitation when trying to retrieve secrets from Secret Scopes on Databricks using Databricks Connect.
 
 In this case, the data will be written in DBFS locations instead of on your local file system.
 
 
+## Git Repos
+You can also use the code of this Repo directly from Databricks. Go to `Git Repos` on Databricks and add it to the Workspace.
+You can run the code on `./notebooks/use_bronze_logs.py` notebook to see an example on how to import and use the Python modules from notebooks.
 
+Note: the same notebook `./notebooks/use_bronze_logs.py` can be used in case you rather use the Package installed on the cluster. If that's the case, just skip the first import cell.
 
 
