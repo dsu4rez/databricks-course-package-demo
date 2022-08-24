@@ -1,0 +1,6 @@
+pyodbc
+pandas
+sqlalchemy
+requests
+
+databricks-connect==10.4.* # version depends on cluster runtime

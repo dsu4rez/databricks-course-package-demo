@@ -1,0 +1,8 @@
+pyodbc
+pandas
+sqlalchemy
+requests
+
+pyspark
+delta
+delta-spark==1.2.0

@@ -1,0 +1,46 @@
+**/*env*
+.terraform*
+terraform.tfstate*
+.DS_STORE
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+*.egg-info/
+build
+dist
+.eggs
+
+# Unit test / coverage reports
+.coverage
+coverage.xml
+junit/*
+htmlcov/*
+
+# Caches
+.pytest_cache/
+
+# VSCode
+.vscode/
+
+# Idea
+.idea/
+*.iml
+
+# MacOS
+.DS_Store
+
+# Databricks eXtensions
+.dbx/lock.json
+
+# local mlflow files
+mlruns/
+
+# local spark warehouse (hive mestastore)
+spark-warehouse
+
+# secrets
+**/.secrets.json
